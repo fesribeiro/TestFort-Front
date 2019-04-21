@@ -1,0 +1,28 @@
+ async componentDidMount(){
+    const response = await api.get('/Establishments');
+        this.setState({
+            Establishments: response.data
+        });
+        console.log(this.state.Establishments);
+   }
+
+   <ul>
+          {this.state.box.files &&
+            this.state.box.files.map(file => (
+              <li key={file._id}>
+                <a
+                  className="fileInfo"
+                  href={file.url}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <MdInsertDriveFile size={24} color="#A5CFFF" />
+                  <strong>{file.title}</strong>
+                </a>
+                <span>
+                  há{" "}
+                  {distanceInWords(file.createdAt, new Date(), { locale: pt })}
+                </span>
+              </li>
+            ))}
+        </ul>
