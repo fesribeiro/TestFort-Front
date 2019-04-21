@@ -1,22 +1,3 @@
-// import React, { Component } from 'react';
-
-// import Icon from '@material-ui/core/Icon';
-
-
-// // import { Container } from './styles';
-
-// export default class RegisterEstablishment extends Component {
-//   render(){
-//     return (
-//         <div className="divRegister">
-
-                
-//         </div>
-//     );
-    
-//   }
-// }
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
@@ -28,6 +9,7 @@ import Icon from '@material-ui/core/Icon'
 import logo from '../../assets/img/logo-fort.jpg'
 import { green } from '@material-ui/core/colors';
 
+import api from '../../services/Api'
 
 const styles = theme => ({
   textField: {
@@ -58,16 +40,25 @@ class RegisterEstablishment extends React.Component {
     this.setState({ [name]: event.target.value });
   };
 
-  onSubmitTeste = (e) => {
+  sendSubmit = async (e) => {
     e.preventDefault();
     console.log(this.state.Establishment);
+    console.log(this.state.Location);
+    console.log(this.state.Owner);    
+    const response = await api.post('/Establishment', {
+        Establishment: this.state.Establishment,
+        Location: this.state.Location,
+        Owner: this.state.Owner
+    });
+    console.log(response.data);
+    this.props.history.push("/Establishments");
+};
 
-  }
 
   render() {
     const { classes } = this.props;
     return (
-      <form className={classes.margin} noValidate autoComplete="off" onSubmit={this.onSubmitTeste}>
+      <form className={classes.margin} noValidate autoComplete="off" onSubmit={this.sendSubmit}>
           <Grid container spacing={0} direction="column" alignItems="center" justify="center" 
           style={{ minHeight: '90vh' }}
           >
@@ -99,7 +90,7 @@ class RegisterEstablishment extends React.Component {
                         margin="normal"
                       />
               </MuiThemeProvider>
-              <Button variant="contained" color="default" className={classes.button}> 
+              <Button type="submit" variant="contained" color="default" className={classes.button}> 
                       Cadastrar
               </Button>
           </Grid>

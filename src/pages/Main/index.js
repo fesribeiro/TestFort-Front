@@ -35,6 +35,7 @@ export default class Main extends Component {
             Owner: this.state.Owner
         });
         console.log(response.data);
+        this.props.history.push("/Establishments");
     };
 
     valueOnChange = (e) => {
