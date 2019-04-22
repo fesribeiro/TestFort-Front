@@ -18,6 +18,7 @@ const styles = theme => ({
     marginBottom: 10,
     width: 240,
     primary: green
+
   }
 });
 
@@ -29,8 +30,9 @@ const theme = createMuiTheme({
 
 }); 
 
-class RegisterEstablishment extends React.Component {
+class UpdateEstablishment extends React.Component {
   state = {
+    DataEstablishment: [],
     Establishment: '',
     Location: '',
     Owner: ''
@@ -41,19 +43,27 @@ class RegisterEstablishment extends React.Component {
   };
 
   sendSubmit = async (e) => {
-    e.preventDefault();
-    console.log(this.state.Establishment);
-    console.log(this.state.Location);
-    console.log(this.state.Owner);    
-    const response = await api.post('/Establishment', {
+    e.preventDefault();   
+    const response = await api.put(`/Establishment/${this.state.DataEstablishment._id}`, {
         Establishment: this.state.Establishment,
         Location: this.state.Location,
         Owner: this.state.Owner
     });
     console.log(response.data);
     this.props.history.push("/Establishments");
-    // console.log('Cadastrado');
-};
+};    
+
+  async componentDidMount(){
+    const idEstablishment = this.props.match.params.id;
+    console.log(idEstablishment);
+    const response = await api.get(`Establishment/${idEstablishment}`);
+    this.setState({
+      Establishment: response.data.Establishment,
+      Location: response.data.Location,
+      Owner: response.data.Location
+    });
+    
+  }
 
 
   render() {
@@ -64,35 +74,45 @@ class RegisterEstablishment extends React.Component {
           style={{ minHeight: '90vh' }}
           >
             <img src={logo} />
+
+          
             <MuiThemeProvider theme={theme}>
+            <strong> Nome do estabelecimento </strong>
                 <TextField
+                        type="text"
                         id="name-establishment"
-                        label="Nome estabelecimento"
+                        // label="Nome estabelecimento"
                         className={classes.textField}
                         value={this.state.Establishment}
                         onChange={this.handleChange('Establishment')}
                         margin="normal"
+                
                       />
-
+                 <strong>Localização</strong>
                 <TextField
                         id="name-Location"
-                        label="Localização"
+                        // label="Localização"
                         className={classes.textField}
                         value={this.state.Location}
                         onChange={this.handleChange('Location')}
                         margin="normal"
+                        // helperText={this.state.Location}
+
                       /> 
+                 <strong>Proprietário</strong>
                 <TextField
                         id="name-Owner"
-                        label="Dono do estabelicimento"
+                        // label="Dono do estabelicimento"
                         className={classes.textField}
                         value={this.state.Owner}
                         onChange={this.handleChange('Owner')}
                         margin="normal"
-                      />
+                    />
               </MuiThemeProvider>
+                    
+
               <Button type="submit" variant="contained" color="default" className={classes.button}> 
-                      Cadastrar
+                      Alterar
               </Button>
           </Grid>
       </form>
@@ -100,9 +120,9 @@ class RegisterEstablishment extends React.Component {
   }
 }
 
-RegisterEstablishment.propTypes = {
+UpdateEstablishment.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RegisterEstablishment);
+export default withStyles(styles)(UpdateEstablishment);
 

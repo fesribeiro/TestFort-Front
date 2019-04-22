@@ -23,8 +23,6 @@ const styles = theme => ({
 });
 
 
-
-
 export default class Establishments extends Component{
   
   state = { establishments: [] }
@@ -40,9 +38,19 @@ export default class Establishments extends Component{
     alert(`Esse ${id}`);
   }
   
-  deleteEstablishment(id){
-    api.delete(`/Establishment/${id}`); 
-    this.props.history.push("/Establishments");
+  async deleteEstablishment(id, index){
+    await api.delete(`/Establishment/${id}`); 
+    // this.props.history.push("/Establishments");
+    const newEstablishments = this.state.establishments;
+    console.log(index);
+    newEstablishments.splice(index, 1)
+    this.setState({
+      establishments: newEstablishments
+    })
+  }
+
+  updateEstablishment(id){
+    this.props.history.push(`/UpdateEstablishments/${id}`);
   }
 
   
@@ -59,7 +67,7 @@ export default class Establishments extends Component{
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.establishments.map(e => (
+            {this.state.establishments.map((e, index) => (
               <TableRow>
                 <TableCell component="th" scope="row">
                   {e.Establishment}
@@ -67,12 +75,12 @@ export default class Establishments extends Component{
                 <TableCell>{e.Location}</TableCell>
                 <TableCell>{e.Owner}</TableCell>
                 <TableCell>
-                <Button variant="outlined" color="primary" > 
-                Update
+                <Button variant="outlined" color="primary"  onClick={ () => this.updateEstablishment(e._id)}> 
+                Alterar 
                 </Button>
                 &nbsp;
-                <Button type="submit" variant="outlined" color="secondary" onClick={ () => this.deleteEstablishment(e._id)}>
-                Delete
+                <Button type="submit" variant="outlined" color="secondary" onClick={ () => this.deleteEstablishment(e._id, index)}>
+                Deletar
                 </Button> 
                 </TableCell>
               </TableRow>
