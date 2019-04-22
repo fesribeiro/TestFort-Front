@@ -66,6 +66,7 @@ class RegisterEstablishment extends React.Component {
             <img src={logo} />
             <MuiThemeProvider theme={theme}>
                 <TextField
+                        required
                         id="name-establishment"
                         label="Nome estabelecimento"
                         className={classes.textField}
@@ -75,6 +76,7 @@ class RegisterEstablishment extends React.Component {
                       />
 
                 <TextField
+                        required
                         id="name-Location"
                         label="Localização"
                         className={classes.textField}
@@ -83,6 +85,7 @@ class RegisterEstablishment extends React.Component {
                         margin="normal"
                       /> 
                 <TextField
+                        required
                         id="name-Owner"
                         label="Dono do estabelicimento"
                         className={classes.textField}

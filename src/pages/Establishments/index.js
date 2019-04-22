@@ -11,6 +11,11 @@ import Button from '@material-ui/core/Button';
 
 import api from '../../services/Api'
 
+
+// import { Container } from './styles';
+
+import {} from './style.css'
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -28,16 +33,12 @@ export default class Establishments extends Component{
   state = { establishments: [] }
   
   async componentDidMount(){
-    const response = await api.get('Establishments');
+    const response = await api.get('/Establishments');
     this.setState({
       establishments: response.data
     });
   }
-  
-  testAlert(id){
-    alert(`Esse ${id}`);
-  }
-  
+
   async deleteEstablishment(id, index){
     await api.delete(`/Establishment/${id}`); 
     // this.props.history.push("/Establishments");
@@ -68,7 +69,7 @@ export default class Establishments extends Component{
           </TableHead>
           <TableBody>
             {this.state.establishments.map((e, index) => (
-              <TableRow>
+              <TableRow id="table-establishment" >
                 <TableCell component="th" scope="row">
                   {e.Establishment}
                 </TableCell>
@@ -79,9 +80,9 @@ export default class Establishments extends Component{
                 Alterar 
                 </Button>
                 &nbsp;
-                <Button type="submit" variant="outlined" color="secondary" onClick={ () => this.deleteEstablishment(e._id, index)}>
-                Deletar
-                </Button> 
+                <Button type="submit" variant="outlined" color="secondary" onClick={ () => window.confirm(`Deseja excluir o Estabelecimento "${e.Establishment}"?`) ?  this.deleteEstablishment(e._id, index) : ''}>
+                Deletar 
+                </Button>
                 </TableCell>
               </TableRow>
             ))}

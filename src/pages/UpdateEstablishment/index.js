@@ -44,23 +44,23 @@ class UpdateEstablishment extends React.Component {
 
   sendSubmit = async (e) => {
     e.preventDefault();   
-    const response = await api.put(`/Establishment/${this.state.DataEstablishment._id}`, {
+    console.log(this.state);
+    await api.put(`/Establishment/${this.state.DataEstablishment._id}`, {
         Establishment: this.state.Establishment,
         Location: this.state.Location,
         Owner: this.state.Owner
     });
-    console.log(response.data);
     this.props.history.push("/Establishments");
 };    
 
   async componentDidMount(){
     const idEstablishment = this.props.match.params.id;
-    console.log(idEstablishment);
+    // console.log(idEstablishment);
     const response = await api.get(`Establishment/${idEstablishment}`);
     this.setState({
       Establishment: response.data.Establishment,
       Location: response.data.Location,
-      Owner: response.data.Location
+      Owner: response.data.Owner
     });
     
   }
@@ -79,6 +79,7 @@ class UpdateEstablishment extends React.Component {
             <MuiThemeProvider theme={theme}>
             <strong> Nome do estabelecimento </strong>
                 <TextField
+                        required
                         type="text"
                         id="name-establishment"
                         // label="Nome estabelecimento"
@@ -90,6 +91,7 @@ class UpdateEstablishment extends React.Component {
                       />
                  <strong>Localização</strong>
                 <TextField
+                        required
                         id="name-Location"
                         // label="Localização"
                         className={classes.textField}
@@ -101,6 +103,7 @@ class UpdateEstablishment extends React.Component {
                       /> 
                  <strong>Proprietário</strong>
                 <TextField
+                        required
                         id="name-Owner"
                         // label="Dono do estabelicimento"
                         className={classes.textField}
