@@ -26,16 +26,25 @@ export default class Main extends Component {
     
     sendSubmit = async (e) => {
         e.preventDefault();
-        console.log(this.state.Establishment);
-        console.log(this.state.Location);
-        console.log(this.state.Owner);    
-        const response = await api.post('/Establishment', {
-            Establishment: this.state.Establishment,
-            Location: this.state.Location,
-            Owner: this.state.Owner
+        // console.log(this.state.Establishment);
+        // console.log(this.state.Location);
+        // console.log(this.state.Owner);    
+        // const response = await api.post('/Establishment', {
+        //     Establishment: this.state.Establishment,
+        //     Location: this.state.Location,
+        //     Owner: this.state.Owner
+        // });
+        // console.log(response.data);
+        // this.props.history.push("/Establishments");
+        const response = await api.post('/token', {
+            email: this.state.Establishment,
+            password: this.state.Location
+            });
+            console.log(response);
+        const responseUser = await api.get('/user', {
+            id: response.data.token
         });
-        console.log(response.data);
-        this.props.history.push("/Establishments");
+        console.log(responseUser);
     };
 
     valueOnChange = (e) => {
@@ -64,13 +73,13 @@ export default class Main extends Component {
                     required
                 />
                 <br/>
-                <input
+                {/* <input
                     placeholder="Nome do Responsável"
                     value={this.state.Owner}
                     name="Owner"
                     onChange={this.handleChange}
                     required
-                />
+                /> */}
                 <input type="submit" value="Cadastrar"/>
             </form>
         </div>

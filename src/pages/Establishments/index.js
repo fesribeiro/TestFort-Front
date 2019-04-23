@@ -40,14 +40,15 @@ export default class Establishments extends Component{
   }
 
   async deleteEstablishment(id, index){
+    const newEstablishments = this.state.establishments;
     await api.delete(`/Establishment/${id}`); 
     // this.props.history.push("/Establishments");
-    const newEstablishments = this.state.establishments;
-    console.log(index);
+    console.log(newEstablishments);
     newEstablishments.splice(index, 1)
     this.setState({
       establishments: newEstablishments
     })
+    console.log(this.state.establishments);
   }
 
   updateEstablishment(id){
@@ -83,6 +84,8 @@ export default class Establishments extends Component{
                 <Button type="submit" variant="outlined" color="secondary" onClick={ () => window.confirm(`Deseja excluir o Estabelecimento "${e.Establishment}"?`) ?  this.deleteEstablishment(e._id, index) : ''}>
                 Deletar 
                 </Button>
+                &nbsp;&nbsp;&nbsp;
+                {e._id}
                 </TableCell>
               </TableRow>
             ))}

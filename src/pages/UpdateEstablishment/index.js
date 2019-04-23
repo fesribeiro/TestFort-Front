@@ -32,7 +32,7 @@ const theme = createMuiTheme({
 
 class UpdateEstablishment extends React.Component {
   state = {
-    id: 0,
+    _id: 0,
     Establishment: '',
     Location: '',
     Owner: ''
@@ -45,7 +45,7 @@ class UpdateEstablishment extends React.Component {
   sendSubmit = async (e) => {
     e.preventDefault();   
     console.log(this.state);
-    await api.put(`/Establishment/${this.state.id}`, {
+    await api.put(`/Establishment/${this.state._id}`, {
         Establishment: this.state.Establishment,
         Location: this.state.Location,
         Owner: this.state.Owner
@@ -58,7 +58,7 @@ class UpdateEstablishment extends React.Component {
     // console.log(idEstablishment);
     const response = await api.get(`Establishment/${idEstablishment}`);
     this.setState({
-      id: idEstablishment,
+      _id: idEstablishment,
       Establishment: response.data.Establishment,
       Location: response.data.Location,
       Owner: response.data.Owner
