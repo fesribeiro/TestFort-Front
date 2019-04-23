@@ -9,7 +9,7 @@ import UpdateEstablishment from './pages/UpdateEstablishment'
 const Routes = () => (
     <BrowserRouter>
         <Switch> 
-            <Route path="/" exact component={Main} />
+            <Route path="/" exact component={Establishments} />
             <Route path="/register" exact component={RegisterEstablishment} />
             <Route path="/Establishments" exact component={Establishments} />
             <Route path="/UpdateEstablishments/:id" exact component={UpdateEstablishment} />
