@@ -69,7 +69,7 @@ export default class Establishments extends Component{
           </TableHead>
           <TableBody>
             {this.state.establishments.map((e, index) => (
-              <TableRow id="table-establishment" >
+              <TableRow id="table-establishment" key={e._id}>
                 <TableCell component="th" scope="row">
                   {e.Establishment}
                 </TableCell>
